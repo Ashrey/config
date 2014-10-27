@@ -32,11 +32,18 @@ class Config{
     protected $cache = '';
 
     /**
+     * Check if update cache
+     * @var bool
+     */
+    protected $no_update = false;
+
+    /**
      *  Construct
      * @param string $cache use cache?
      */
-    public function __construct($cache = ''){
-        $this->cache = $cache;
+    public function __construct($cache = '', $no_update = FALSE){
+        $this->cache      = $cache;
+        $this->no_update = $no_update;
     }
 
     /**
@@ -120,7 +127,9 @@ class Config{
      */
     protected function isCached($file){
         $cache = $this->cacheName($file);
-        return !empty($this->cache) && is_readable($cache) &&  (filemtime($file) < filemtime($cache));
+        return !empty($this->cache) 
+            && is_readable($cache) 
+            && ($this->no_update || filemtime($file) < filemtime($cache));
     }
 
 
