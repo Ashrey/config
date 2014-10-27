@@ -1,0 +1,21 @@
+{
+    "name": "ashrey/pantaconf",
+    "description": "Configuration reader for much format",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alberto Berroteran",
+            "email": "aberroteran@live.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.0",
+        "mustangostang/spyc" : "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "Ashrey\\Config": "lib/"
+        }
+    }
+}
