@@ -2,6 +2,17 @@
 PHP Configuration reader in several format  like https://github.com/symfony/Config but Fitness :D
 Now it reads configuration file on YML, JSON, and INI format
 
+##Usage
+add to composer require *"ashrey/pantaconf": "dev-master"*
+and your PHP code:
+
+```php
+<?php
+$conf = new Ashrey\Config\Config();
+$var = $conf->read('config.yml');
+var_dump($var);
+```
+
 ##License
 Copyright (c) 2014 Alberto Berroteran
 
