@@ -13,6 +13,14 @@ $var = $conf->read('config.yml');
 var_dump($var);
 ```
 
+if you want using cache
+```php
+<?php
+$conf = new Ashrey\Config\Config('./cache');
+$var = $conf->read('config.yml');
+var_dump($var);
+```
+
 ##License
 Copyright (c) 2014 Alberto Berroteran
 

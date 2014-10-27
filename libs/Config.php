@@ -25,6 +25,19 @@ class Config{
         'ini'  => '\Ashrey\Config\Parser\Ini',
     );
 
+    /**
+     * Cache path, if empty it not use cache
+     * @var string
+     */
+    protected $cache = '';
+
+    /**
+     *  Construct
+     * @param string $cache use cache?
+     */
+    public function __construct($cache = ''){
+        $this->cache = $cache;
+    }
 
     /**
      * Read a config file
@@ -39,6 +52,10 @@ class Config{
         $file = realpath($file);
         if (isset($this->_conf[$file]) && !$force){
             return isset($this->_conf[$file]);
+        }
+
+        if($this->isCached($file)){
+            return include $this->cacheName($file);
         }
         return $this->parser($file);
     }
@@ -56,9 +73,9 @@ class Config{
         $class = $this->_parser[$ext];
         $obj   = new $class();
         $this->_conf[$file] = $obj->parse($this->readfile($file));
-
-
-
+        if(!empty($this->cache))
+            $this->writefile($file);
+        return $this->_conf[$file];
     }
 
     /**
@@ -71,6 +88,39 @@ class Config{
             throw new \RuntimeException("$file no is readable  file");
         }
         return file_get_contents($file);
+    }
+
+    /**
+     * Write Cache of file
+     * @param  string $file path
+     * @return
+     */
+    protected function writefile($file){
+        if(!is_writable($this->cache)){
+            throw new \RuntimeException("$this->cache no is writable dir");
+        }
+        $text = "<?php\nreturn ".var_export($this->_conf[$file], TRUE).";\n?>";
+        return file_put_contents($this->cacheName($file), $text);
+    }
+
+    /**
+     * Return the cache name of $file
+     * @param  string $file
+     * @return string       
+     */
+    protected function cacheName($file){
+        $hash = sha1($file);
+        return "$this->cache/$hash.php";
+    }
+
+    /**
+     * Return if $file is cached
+     * @param string $file 
+     * @return bool
+     */
+    protected function isCached($file){
+        $cache = $this->cacheName($file);
+        return !empty($this->cache) && is_readable($cache) &&  (filemtime($file) < filemtime($cache));
     }
 
 
