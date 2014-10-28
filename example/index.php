@@ -1,17 +1,11 @@
 <table>
 <?php
 include '../vendor/autoload.php';
-include '../libs/Config.php';
-include '../libs/Parser/ParserInterface.php';
-
-include '../libs/Parser/Json.php';
-include '../libs/Parser/Yaml.php';
-include '../libs/Parser/Ini.php';
 
 $max = 100;
 $r   = (int)$max*0.05;
 
-$conf = new Ashrey\Config\Config('./cache', TRUE);
+$conf = new \Ashrey\Config\Config('./cache', TRUE);
 $time = array();
 for($i=0;$i<$max;$i++){
     $to = microtime(TRUE);
