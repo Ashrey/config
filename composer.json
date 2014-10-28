@@ -15,8 +15,6 @@
         "mustangostang/spyc" : "dev-master"
     },
     "autoload": {
-        "psr-4": {
-            "Ashrey\\Config\\": "libs/"
-        }
+        "psr-0": {"Ashrey\\Config\\": "libs/" }
     }
 }
