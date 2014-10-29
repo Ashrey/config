@@ -23,6 +23,7 @@ class Config{
         'json' => '\Ashrey\Config\Parser\Json',
         'yml'  => '\Ashrey\Config\Parser\Yaml',
         'ini'  => '\Ashrey\Config\Parser\Ini',
+        'php'  => '\Ashrey\Config\Parser\Php',
     );
 
     /**
