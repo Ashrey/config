@@ -3,62 +3,40 @@
 include '../vendor/autoload.php';
 
 $max = 100;
-$r   = (int)$max*0.05;
+
+
+function execute($conf, $max){
+    $time = array();
+    for($i=0;$i<$max;$i++){
+        $to = microtime(TRUE);
+        $var = $conf->read('config.json', TRUE);
+        $var = $conf->read('config.yml', TRUE);
+        $var = $conf->read('config.ini', TRUE);
+        $var = $conf->read('config.php', TRUE);
+        $tf = microtime(TRUE);
+        $time[] = ($tf-$to);
+    }
+    sort($time);
+    $r   = (int)$max*0.05;
+    for($i=0;$i<$r;$i++)
+        array_pop($time);
+    for($i=0;$i<$r;$i++)
+        array_shift($time);
+    return array_sum($time) / count($time);
+}
 
 $conf = new \Ashrey\Config\Config('./cache', TRUE);
-$time = array();
-for($i=0;$i<$max;$i++){
-    $to = microtime(TRUE);
-    $var = $conf->read('config.json', TRUE);
-    $var = $conf->read('config.yml', TRUE);
-    $var = $conf->read('config.ini', TRUE);
-    $tf = microtime(TRUE);
-    $time[] = ($tf-$to);
-}
-sort($time);
-for($i=0;$i<$r;$i++)
-    array_pop($time);
-for($i=0;$i<$r;$i++)
-    array_shift($time);
-$avr = array_sum($time) / count($time); 
-echo "<tr><td>Using cache (no update):</td> <td>$avr</td></tr>";
+$time = execute($conf, $max);
+echo "<tr><td>Using cache (no update):</td> <td>$time</td></tr>";
 
 
 $conf = new Ashrey\Config\Config('./cache');
-$time = array();
-for($i=0;$i<$max;$i++){
-    $to = microtime(TRUE);
-    $var = $conf->read('config.json', TRUE);
-    $var = $conf->read('config.yml', TRUE);
-    $var = $conf->read('config.ini', TRUE);
-    $tf = microtime(TRUE);
-    $time[] = ($tf-$to);
-}
-sort($time);
-for($i=0;$i<$r;$i++)
-    array_pop($time);
-for($i=0;$i<$r;$i++)
-    array_shift($time);
-$avr = array_sum($time) / count($time); 
-echo "<tr><td>Using cache:</td> <td>$avr</td></tr>";
+$time = execute($conf, $max);
+echo "<tr><td>Using cache:</td> <td>$time</td></tr>";
 
 
 $conf = new Ashrey\Config\Config();
-$time = array();
-for($i=0;$i<$max;$i++){
-    $to = microtime(TRUE);
-    $var = $conf->read('config.json', TRUE);
-    $var = $conf->read('config.yml', TRUE);
-    $var = $conf->read('config.ini', TRUE);
-    $tf = microtime(TRUE);
-    $time[] = ($tf-$to);
-}
-sort($time);
-for($i=0;$i<$r;$i++)
-    array_pop($time);
-for($i=0;$i<$r;$i++)
-    array_shift($time);
-$avr = array_sum($time) / count($time); 
-echo "<tr><td>Without Cache:</td> <td>$avr</td></tr>";
+$time = execute($conf, $max);
+echo "<tr><td>Without Cache:</td> <td>$time</td></tr>";
 ?>
 </table>
