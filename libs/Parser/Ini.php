@@ -8,7 +8,7 @@ namespace Ashrey\Config\Parser;
  * @author Alberto Berroteran
  */
 class Ini implements ParserInterface{
-    public function parse($text){
+    public function parse($text, $file){
         return parse_ini_string($text, TRUE);
     }
 }

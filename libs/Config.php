@@ -80,7 +80,7 @@ class Config{
         }
         $class = $this->_parser[$ext];
         $obj   = new $class();
-        $this->_conf[$file] = $obj->parse($this->readfile($file));
+        $this->_conf[$file] = $obj->parse($this->readfile($file), $file);
         if(!empty($this->cache))
             $this->writefile($file);
         return $this->_conf[$file];

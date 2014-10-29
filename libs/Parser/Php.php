@@ -8,7 +8,10 @@ namespace Ashrey\Config\Parser;
  * @author Alberto Berroteran
  */
 class Php implements ParserInterface{
-    public function parse($text){
-        return require $text;
+    public function parse($text, $file){
+        if(!preg_match('/^\s*<\?php\s+return\s+/', $text)){
+            throw new \RuntimeException("Invalid php configuration file");
+        }
+        return require $file;
     }
 }

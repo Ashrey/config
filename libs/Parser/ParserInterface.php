@@ -8,5 +8,5 @@ namespace Ashrey\Config\Parser;
  * @author Alberto Berroteran
  */
 interface ParserInterface{
-    public function parse($text);
+    public function parse($text, $file);
 }

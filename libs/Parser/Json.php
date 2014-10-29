@@ -8,7 +8,7 @@ namespace Ashrey\Config\Parser;
  * @author Alberto Berroteran
  */
 class Json implements ParserInterface{
-    public function parse($text){
+    public function parse($text, $file){
         return json_decode($text, TRUE);
     }
 }
